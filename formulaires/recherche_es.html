@@ -1,0 +1,44 @@
+<div class="formulaire_spip formulaire_recherche_es">
+  [(#ENV*{message_ok}|oui)
+    <p class="reponse_formulaire reponse_formulaire_ok">#ENV*{message_ok}</p>]
+  [(#ENV*{message_erreur}|oui)
+    <p class="reponse_formulaire reponse_formulaire_erreur">#ENV*{message_erreur}</p>]
+
+  <form method="post" action="#ENV{action}">
+    #ACTION_FORMULAIRE{#ENV{action}} 
+
+    <div class="editer-groupe">
+      <div class="editer editer_query[ (#ENV**{erreurs}|table_valeur{query}|oui)erreur]">
+        <label for="query">Recherche</label>
+        [<span class="erreur_message">(#ENV**{erreurs}|table_valeur{query})</span>]
+        <input type="text" name="query" id="query" value="[(#ENV{query})]" />
+      </div>
+    </div>
+
+    <p class="boutons">
+      <input type="submit" class="submit" value="<:rechercher:>" />
+    </p>
+  </form>
+  
+</div>
+[(#ENV{query}|oui)
+  <div class="resultats_es">
+    <h2>Résultats pour « [(#ENV{query})] »</h2>
+
+    <B_hits>
+      <ul class="liste-resultats">
+        <BOUCLE_hits(DATA){source tableau, #ENV{query}|elastic_search}>
+          <li>
+            <strong>[(#VALEUR{_source/titre}|sinon{Sans titre})]</strong><br />
+            [Auteur&nbsp;: (#VALEUR{_source/auteur})]<br />
+            [#VALEUR{_source/resume}]
+          </li>
+        </BOUCLE_hits>
+      </ul>
+    </B_hits>
+    <p>Aucun résultat trouvé.</p>
+    <//B_hits>
+
+  </div>
+]
+

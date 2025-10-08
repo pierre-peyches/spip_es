@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<paquet prefix="SPIP_ELASTICSEARCH" 
+version="1.0.0" 
+etat="dev" 
+compatibilite="[4.4.0-dev;4.*]"
+licence="Commerciale">
+    <nom>SPIP Elasticsearch</nom>
+    <auteur>Pierre</auteur>
+</paquet>
